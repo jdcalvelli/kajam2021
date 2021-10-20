@@ -22,6 +22,7 @@ scene('main', ()=> {
 
   //card instantiation test
   let card1 = new Card(124, 124, 'right', null);
+  let card2 = new Card(124, 248, 'left', null);
 
   const card1Actual = add([
     rect(64, 124),
@@ -29,15 +30,27 @@ scene('main', ()=> {
     scale(0.5),
     pos(card1.xPos, card1.yPos),
     area(),
-    'card-clickable'
+    'card1Actual'
+  ]);
+
+  const card2Actual = add([
+    rect(64, 124),
+    text('move left'),
+    scale(0.5),
+    pos(card2.xPos, card2.yPos),
+    area(),
+    'card2Actual'
   ]);
 
   //moves right with some speed value i dont yet understand
   //DOESNT WORK WITHOUT COLLIDER
 
-  console.log(card1.executeCardAction());
+  clicks('card1Actual', ()=> player.move(card1.executeCardAction()));
+  clicks('card2Actual', ()=> player.move(card2.executeCardAction()));
 
-  clicks('card-clickable', ()=> player.move(card1.executeCardAction()));
+
+
+
 
 });
 
