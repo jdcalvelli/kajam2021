@@ -6,7 +6,7 @@ export default class Deck {
   //cards, deck will have a method to randomize the instantiated card order
 
   constructor() {
-    this.deckCards = [];
+    this.deckCards = new Array(52);
   }
 
   instantiateDeckCards() {

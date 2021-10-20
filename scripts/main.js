@@ -1,5 +1,6 @@
 import kaboom from "https://unpkg.com/kaboom@next/dist/kaboom.mjs";
 import Card from "./card.js";
+import Deck from "./deck.js";
 
 //creating basic kaboom instance
 kaboom({
@@ -48,10 +49,10 @@ scene('main', ()=> {
   clicks('card1Actual', ()=> player.move(card1.executeCardAction()));
   clicks('card2Actual', ()=> player.move(card2.executeCardAction()));
 
+  const deck1 = new Deck;
+  deck1.instantiateDeckCards();
 
-
-
-
+  console.log(deck1.deckCards);
 });
 
 go('main');
