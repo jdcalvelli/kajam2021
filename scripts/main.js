@@ -26,7 +26,12 @@ scene('main', ()=> {
   const card1Actual = add([
     rect(64, 124),
     pos(card1.xPos, card1.yPos),
+    area(),
+    'card-clickable'
   ]);
+
+  clicks('card-clickable', ()=> console.log('dumby')); //DOESNT WORK W/O COLLIDER
+
 });
 
 go('main');
