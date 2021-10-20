@@ -21,16 +21,23 @@ scene('main', ()=> {
   ]);
 
   //card instantiation test
-  let card1 = new Card(124, 124, 'test', null);
+  let card1 = new Card(124, 124, 'right', null);
 
   const card1Actual = add([
     rect(64, 124),
+    text('move right'),
+    scale(0.5),
     pos(card1.xPos, card1.yPos),
     area(),
     'card-clickable'
   ]);
 
-  clicks('card-clickable', ()=> console.log('dumby')); //DOESNT WORK W/O COLLIDER
+  //moves right with some speed value i dont yet understand
+  //DOESNT WORK WITHOUT COLLIDER
+
+  console.log(card1.executeCardAction());
+
+  clicks('card-clickable', ()=> player.move(card1.executeCardAction()));
 
 });
 

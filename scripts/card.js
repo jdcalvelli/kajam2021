@@ -1,3 +1,5 @@
+import kaboom from "https://unpkg.com/kaboom@next/dist/kaboom.mjs";
+
 //template for cards
 export default class Card {
   constructor(tempX, tempY, tempCardValue, tempCardSprite){ //add args to constructor to pass values in when instantiating
@@ -12,4 +14,22 @@ export default class Card {
   }
   //this is where we put methods?
   //execute action method, based on value of cards
+  executeCardAction() {
+    switch (this.cardValue) {
+      case 'up':
+          return vec2(0, -1000);
+        break;
+      case 'down':
+          return vec2(0, 1000);
+        break;
+      case 'left':
+          return vec2(-1000, 0);
+        break;
+      case 'right':
+          return vec2(1000, 0);
+        break;
+      default:
+
+    }
+  }
 }
