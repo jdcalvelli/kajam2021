@@ -32,8 +32,25 @@ scene('main', ()=> {
   //player creation
   const player = add([
     pos(288, 192),
-    rect(32, 32)
+    rect(32, 32),
+    area(),
+    'player'
   ]);
+
+  //enemy creation
+  const enemy = add([
+    rect(32, 32),
+    pos(352, 192),
+    color(124, 0, 0),
+    area(),
+    'enemy'
+  ]);
+
+  //game logic
+  //player collision
+  collides('player', 'enemy', () => {
+    destroy(player);
+  });
 
   //deck initialization
   const deck1 = new Deck;
