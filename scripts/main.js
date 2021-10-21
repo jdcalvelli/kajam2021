@@ -57,6 +57,42 @@ scene('main', ()=> {
   //we want to display 3 cards at a time, pulled from the top of the deck
   //when a cardActual is used, we want to execute the card action and destroy
   //the cardActual, and pop it from the array
+
+  const card1Actual = add([
+    rect(96, 160),
+    pos(128, 288),
+    color(255, 0, 0),
+    area(),
+    'card1Actual'
+  ]);
+  //deck1.deckCards[0]
+
+  const card2Actual = add([
+    rect(96, 160),
+    pos(256, 288),
+    color(0, 255, 0),
+    area(),
+    'card2Actual'
+  ]);
+  //deck1.deckCards[1]
+
+  const card3Actual = add([
+    rect(96, 160),
+    pos(384, 288),
+    color(0, 0, 255),
+    area(),
+    'card3Actual'
+  ]);
+  //deck1.deckCards[2]
+
+  clicks('card1Actual', ()=> player.move(deck1.deckCards[0].executeCardAction()));
+  clicks('card2Actual', ()=> player.move(deck1.deckCards[1].executeCardAction()));
+  clicks('card3Actual', ()=> player.move(deck1.deckCards[2].executeCardAction()));
+
+  //write a function in action that checks if a card has been pressed and then
+  //pops the value of that card from the array and moves the corresponding values
+  //up
+
 });
 
 go('main');
