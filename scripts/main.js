@@ -51,6 +51,10 @@ scene('main', ()=> {
   collides('player', 'enemy', () => {
     destroy(player);
   });
+  collides('player', 'impassable-wall', () => {
+    console.log('collide w wall');
+    destroy(player);
+  });
 
   //deck initialization
   const deck1 = new Deck;

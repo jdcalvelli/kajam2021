@@ -25,6 +25,10 @@ const level1MapConfig = {
     sprite('holdoverTile'),
   ],
   '*': () => [
+    area({
+      width: 32,
+      height: 32,
+    }),
     'impassable-wall'
   ],
 }
