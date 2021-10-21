@@ -1,17 +1,17 @@
 import kaboom from "https://unpkg.com/kaboom@next/dist/kaboom.mjs";
 
 const level1Map = [
+  '                    ', //top ui area
   '                    ',
-  '                    ',
-  '                    ',
-  '     ==========     ', //here
-  '     ==========     ',
-  '     ==========     ',
-  '     ==========     ',
-  '     ==========     ',
-  '     ==========     ', //to here
-  '                    ',
-  '                    ',
+  '     **********     ',
+  '    *==========*    ', //level area here
+  '    *==========*    ',
+  '    *==========*    ',
+  '    *==========*    ',
+  '    *==========*    ',
+  '    *==========*    ', //to here
+  '     **********     ',
+  '                    ', //card area below here
   '                    ',
   '                    ',
   '                    ',
@@ -23,6 +23,9 @@ const level1MapConfig = {
   height: 32,
   '=': () => [
     sprite('holdoverTile'),
+  ],
+  '*': () => [
+    'impassable-wall'
   ],
 }
 
