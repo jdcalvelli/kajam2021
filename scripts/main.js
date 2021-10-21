@@ -53,7 +53,11 @@ scene('main', ()=> {
   //number of blocks of them, it should go to them
   let moveAmount = 1;
   action('enemy', () => {
-    enemy.moveBy(0, moveAmount);
+    //checks to see if player is outside of 1 tile of enemy
+    if (player.pos.x < enemy.pos.x - 32 || player.pos.x > enemy.pos.x + 32
+      || player.pos.y < enemy.pos.y - 32 || player.pos.y > enemy.pos.y + 32) {
+          enemy.moveBy(0, moveAmount);
+    }
   });
   collides('enemy', 'impassable-wall', () => {
     moveAmount = -moveAmount;
