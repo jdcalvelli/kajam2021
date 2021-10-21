@@ -63,7 +63,10 @@ scene('main', ()=> {
     pos(128, 288),
     color(255, 0, 0),
     area(),
-    'card1Actual'
+    'card1Actual',
+    {
+      value: deck1.deckCards.pop()
+    }
   ]);
   //deck1.deckCards[0]
 
@@ -72,7 +75,10 @@ scene('main', ()=> {
     pos(256, 288),
     color(0, 255, 0),
     area(),
-    'card2Actual'
+    'card2Actual',
+    {
+      value: deck1.deckCards.pop()
+    }
   ]);
   //deck1.deckCards[1]
 
@@ -81,14 +87,29 @@ scene('main', ()=> {
     pos(384, 288),
     color(0, 0, 255),
     area(),
-    'card3Actual'
+    'card3Actual',
+    {
+      value: deck1.deckCards.pop()
+    }
   ]);
   //deck1.deckCards[2]
 
-  clicks('card1Actual', ()=> player.move(deck1.deckCards[0].executeCardAction()));
-  clicks('card2Actual', ()=> player.move(deck1.deckCards[1].executeCardAction()));
-  clicks('card3Actual', ()=> player.move(deck1.deckCards[2].executeCardAction()));
+  console.log(card1Actual.value);
+  console.log(card2Actual.value);
+  console.log(card3Actual.value);
 
+  clicks('card1Actual', ()=> {
+      player.move(card1Actual.value.executeCardAction());
+      card1Actual.value = deck1.deckCards.pop();
+  });
+  clicks('card2Actual', ()=> {
+    player.move(card2Actual.value.executeCardAction());
+    card2Actual.value = deck1.deckCards.pop();
+  });
+  clicks('card3Actual', ()=> {
+    player.move(card3Actual.value.executeCardAction());
+    card2Actual.value = deck1.deckCards.pop();
+  });
   //write a function in action that checks if a card has been pressed and then
   //pops the value of that card from the array and moves the corresponding values
   //up
