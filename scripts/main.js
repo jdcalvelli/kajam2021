@@ -1,4 +1,5 @@
 import kaboom from "https://unpkg.com/kaboom@next/dist/kaboom.mjs";
+
 import Card from "./card.js";
 import Deck from "./deck.js";
 import drawline from "./drawline.js";
@@ -46,6 +47,17 @@ scene('main', ()=> {
     area(),
     'enemy'
   ]);
+
+  //enemy ai
+  //want the enemy to follow a set path, then if the player is within a certain
+  //number of blocks of them, it should go to them
+  let moveAmount = 1;
+  action('enemy', () => {
+    enemy.moveBy(0, moveAmount);
+  });
+  collides('enemy', 'impassable-wall', () => {
+    moveAmount = -moveAmount;
+  });
 
   //game logic
   //player collision
