@@ -13,16 +13,16 @@ export default class Deck {
     for (let i = 0; i < this.deckCards.length; i++) {
       switch (randi(1, 4)) {
         case 1:
-          this.deckCards[i] = new Card(null, null, 'up', null);
+          this.deckCards[i] = new Card(null, null, 'up', 'upSprite');
           break;
         case 2:
-          this.deckCards[i] = new Card(null, null, 'down', null);
+          this.deckCards[i] = new Card(null, null, 'down', 'downSprite');
           break;
         case 3:
-          this.deckCards[i] = new Card(null, null, 'left', null);
+          this.deckCards[i] = new Card(null, null, 'left', 'leftSprite');
           break;
         case 4:
-          this.deckCards[i] = new Card(null, null, 'right', null);
+          this.deckCards[i] = new Card(null, null, 'right', 'rightSprite');
           break;
         default:
       }
