@@ -31,8 +31,7 @@ scene('main', ()=> {
 
   //player creation
   const player = add([
-    origin('center'),
-    pos(width()/2, height()/2),
+    pos(288, 192),
     rect(32, 32)
   ]);
 
@@ -81,19 +80,19 @@ scene('main', ()=> {
 
   //on click for each card, execute card action, update card value, update card sprite
   clicks('card1Actual', ()=> {
-      player.move(card1Actual.value.executeCardAction());
-      card1Actual.value = deck1.deckCards.pop();
-      card1ActualSprite = card1Actual.value.cardSprite;
-      card1Actual.use(sprite(card1ActualSprite)); //adds or override existing component
+    player.moveBy(card1Actual.value.executeCardAction());
+    card1Actual.value = deck1.deckCards.pop();
+    card1ActualSprite = card1Actual.value.cardSprite;
+    card1Actual.use(sprite(card1ActualSprite)); //adds or override existing component
   });
   clicks('card2Actual', ()=> {
-    player.move(card2Actual.value.executeCardAction());
+    player.moveBy(card2Actual.value.executeCardAction());
     card2Actual.value = deck1.deckCards.pop();
     card2ActualSprite = card2Actual.value.cardSprite;
     card2Actual.use(sprite(card2ActualSprite));
   });
   clicks('card3Actual', ()=> {
-    player.move(card3Actual.value.executeCardAction());
+    player.moveBy(card3Actual.value.executeCardAction());
     card3Actual.value = deck1.deckCards.pop();
     card3ActualSprite = card3Actual.value.cardSprite;
     card3Actual.use(sprite(card3ActualSprite));

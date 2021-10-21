@@ -17,16 +17,16 @@ export default class Card {
   executeCardAction() {
     switch (this.cardValue) {
       case 'up':
-          return vec2(0, -1000);
+          return vec2(0, -32);
         break;
       case 'down':
-          return vec2(0, 1000);
+          return vec2(0, 32);
         break;
       case 'left':
-          return vec2(-1000, 0);
+          return vec2(-32, 0);
         break;
       case 'right':
-          return vec2(1000, 0);
+          return vec2(32, 0);
         break;
       default:
 
