@@ -2,6 +2,8 @@ import kaboom from "https://unpkg.com/kaboom@next/dist/kaboom.mjs";
 import Card from "./card.js";
 import Deck from "./deck.js";
 
+import {level1Map, level1MapConfig} from "./levels.js";
+
 //creating basic kaboom instance
 kaboom({
   width: 640,
@@ -14,7 +16,13 @@ loadSprite('downSprite', './assets/down.png');
 loadSprite('leftSprite', './assets/left.png');
 loadSprite('rightSprite', './assets/right.png');
 
+//loading in tiles for use in levels.js
+loadSprite('holdoverTile', './assets/holdoverTile.png');
+
 scene('main', ()=> {
+
+  //add level
+  addLevel(level1Map, level1MapConfig);
 
   //level text basic
   add([
@@ -40,7 +48,7 @@ scene('main', ()=> {
   //drawing card game objects
   const card1Actual = add([
     rect(96, 160),
-    pos(128, 288),
+    pos(128, 320),
     sprite(card1ActualSprite),
     area(),
     'card1Actual',
@@ -51,7 +59,7 @@ scene('main', ()=> {
 
   const card2Actual = add([
     rect(96, 160),
-    pos(256, 288),
+    pos(256, 320),
     sprite(card2ActualSprite),
     area(),
     'card2Actual',
@@ -62,7 +70,7 @@ scene('main', ()=> {
 
   const card3Actual = add([
     rect(96, 160),
-    pos(384, 288),
+    pos(384, 320),
     sprite(card3ActualSprite),
     area(),
     'card3Actual',
