@@ -28,49 +28,16 @@ scene('main', ()=> {
     rect(32, 32)
   ]);
 
-  //card instantiation test
-  //let card1 = new Card(124, 124, 'right', null);
-  //let card2 = new Card(124, 248, 'left', null);
-
-  // const card1Actual = add([
-  //   rect(64, 124),
-  //   text('move right'),
-  //   scale(0.5),
-  //   pos(card1.xPos, card1.yPos),
-  //   area(),
-  //   'card1Actual'
-  // ]);
-  //
-  // const card2Actual = add([
-  //   rect(64, 124),
-  //   text('move left'),
-  //   scale(0.5),
-  //   pos(card2.xPos, card2.yPos),
-  //   area(),
-  //   'card2Actual'
-  // ]);
-
-  //moves right with some speed value i dont yet understand
-  //DOESNT WORK WITHOUT COLLIDER
-
-  //clicks('card1Actual', ()=> player.move(card1.executeCardAction()));
-  //clicks('card2Actual', ()=> player.move(card2.executeCardAction()));
-
+  //deck initialization
   const deck1 = new Deck;
   deck1.instantiateDeckCards();
 
-  console.log(deck1.deckCards);
-
-  //we want to display 3 cards at a time, pulled from the top of the deck
-  //when a cardActual is used, we want to execute the card action and destroy
-  //the cardActual, and pop it from the array
-
+  //setting initial card sprites
   let card1ActualSprite = deck1.deckCards[deck1.deckCards.length - 1].cardSprite;
   let card2ActualSprite = deck1.deckCards[deck1.deckCards.length - 2].cardSprite;
   let card3ActualSprite = deck1.deckCards[deck1.deckCards.length - 3].cardSprite;
 
-  //because the object has been initialized already, when we change the
-  //value of the variable, it doesnt change anything dynamically
+  //drawing card game objects
   const card1Actual = add([
     rect(96, 160),
     pos(128, 288),
@@ -81,7 +48,6 @@ scene('main', ()=> {
       value: deck1.deckCards.pop(),
     }
   ]);
-  //deck1.deckCards[0]
 
   const card2Actual = add([
     rect(96, 160),
@@ -93,7 +59,6 @@ scene('main', ()=> {
       value: deck1.deckCards.pop()
     }
   ]);
-  //deck1.deckCards[1]
 
   const card3Actual = add([
     rect(96, 160),
@@ -105,12 +70,8 @@ scene('main', ()=> {
       value: deck1.deckCards.pop()
     }
   ]);
-  //deck1.deckCards[2]
 
-  //console.log(card1Actual.value);
-  //console.log(card2Actual.value);
-  //console.log(card3Actual.value);
-
+  //on click for each card, execute card action, update card value, update card sprite
   clicks('card1Actual', ()=> {
       player.move(card1Actual.value.executeCardAction());
       card1Actual.value = deck1.deckCards.pop();
@@ -129,9 +90,6 @@ scene('main', ()=> {
     card3ActualSprite = card3Actual.value.cardSprite;
     card3Actual.use(sprite(card3ActualSprite));
   });
-  //write a function in action that checks if a card has been pressed and then
-  //pops the value of that card from the array and moves the corresponding values
-  //up
 
 });
 
