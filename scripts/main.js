@@ -22,37 +22,41 @@ scene('main', ()=> {
   ]);
 
   //card instantiation test
-  let card1 = new Card(124, 124, 'right', null);
-  let card2 = new Card(124, 248, 'left', null);
+  //let card1 = new Card(124, 124, 'right', null);
+  //let card2 = new Card(124, 248, 'left', null);
 
-  const card1Actual = add([
-    rect(64, 124),
-    text('move right'),
-    scale(0.5),
-    pos(card1.xPos, card1.yPos),
-    area(),
-    'card1Actual'
-  ]);
-
-  const card2Actual = add([
-    rect(64, 124),
-    text('move left'),
-    scale(0.5),
-    pos(card2.xPos, card2.yPos),
-    area(),
-    'card2Actual'
-  ]);
+  // const card1Actual = add([
+  //   rect(64, 124),
+  //   text('move right'),
+  //   scale(0.5),
+  //   pos(card1.xPos, card1.yPos),
+  //   area(),
+  //   'card1Actual'
+  // ]);
+  //
+  // const card2Actual = add([
+  //   rect(64, 124),
+  //   text('move left'),
+  //   scale(0.5),
+  //   pos(card2.xPos, card2.yPos),
+  //   area(),
+  //   'card2Actual'
+  // ]);
 
   //moves right with some speed value i dont yet understand
   //DOESNT WORK WITHOUT COLLIDER
 
-  clicks('card1Actual', ()=> player.move(card1.executeCardAction()));
-  clicks('card2Actual', ()=> player.move(card2.executeCardAction()));
+  //clicks('card1Actual', ()=> player.move(card1.executeCardAction()));
+  //clicks('card2Actual', ()=> player.move(card2.executeCardAction()));
 
   const deck1 = new Deck;
   deck1.instantiateDeckCards();
 
   console.log(deck1.deckCards);
+
+  //we want to display 3 cards at a time, pulled from the top of the deck
+  //when a cardActual is used, we want to execute the card action and destroy
+  //the cardActual, and pop it from the array
 });
 
 go('main');
