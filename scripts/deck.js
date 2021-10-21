@@ -11,7 +11,7 @@ export default class Deck {
 
   instantiateDeckCards() {
     for (let i = 0; i < this.deckCards.length; i++) {
-      switch (randi(1, 4)) {
+      switch (randi(1, 5)) {
         case 1:
           this.deckCards[i] = new Card(null, null, 'up', 'upSprite');
           break;
