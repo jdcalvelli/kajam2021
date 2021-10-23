@@ -9,24 +9,22 @@ export default class Deck {
     this.deckCards = new Array(52);
   }
 
+
+  //method instantiate a set number of each card
   instantiateDeckCards() {
-    for (let i = 0; i < this.deckCards.length; i++) {
-      switch (randi(1, 5)) {
-        case 1:
-          this.deckCards[i] = new Card(null, null, 'up', 'upSprite');
-          break;
-        case 2:
-          this.deckCards[i] = new Card(null, null, 'down', 'downSprite');
-          break;
-        case 3:
-          this.deckCards[i] = new Card(null, null, 'left', 'leftSprite');
-          break;
-        case 4:
-          this.deckCards[i] = new Card(null, null, 'right', 'rightSprite');
-          break;
-        default:
-      }
+    //each card should appear an equal number of times
+    // divide total array length by number of cards
+    for (let i = 0; i < this.deckCards.length / 4; i++) {
+      this.deckCards[i] = new Card(null, null, 'up', 'upSprite');
+    }
+    for (let i = this.deckCards.length / 4; i < (this.deckCards.length / 4) * 2; i++) {
+      this.deckCards[i] = new Card(null, null, 'down', 'downSprite');
+    }
+    for (let i = (this.deckCards.length / 4) * 2; i < (this.deckCards.length / 4) * 3; i++) {
+      this.deckCards[i] = new Card(null, null, 'left', 'leftSprite');
+    }
+    for (let i = (this.deckCards.length / 4) * 3; i < (this.deckCards.length / 4) * 4; i++) {
+      this.deckCards[i] = new Card(null, null, 'right', 'rightSprite');
     }
   }
-
 }
