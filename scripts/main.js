@@ -128,40 +128,25 @@ scene('level1', ()=> {
     //on click for each card, execute card action, update card value, update card sprite
     clicks('card1Actual', ()=> {
       player.moveBy(card1Actual.value.executeCardAction());
-      card1Actual.value = deck1.deckCards.pop();
-      card1ActualSprite = card1Actual.value.cardSprite;
-      card1Actual.use(sprite(card1ActualSprite)); //adds or override existing component
+      cardChange(deck1, card1Actual, card1ActualSprite);
       changeTurn();
     });
     clicks('card2Actual', ()=> {
       player.moveBy(card2Actual.value.executeCardAction());
-      card2Actual.value = deck1.deckCards.pop();
-      card2ActualSprite = card2Actual.value.cardSprite;
-      card2Actual.use(sprite(card2ActualSprite));
+      cardChange(deck1, card2Actual, card2ActualSprite);
       changeTurn();
     });
     clicks('card3Actual', ()=> {
       player.moveBy(card3Actual.value.executeCardAction());
-      card3Actual.value = deck1.deckCards.pop();
-      card3ActualSprite = card3Actual.value.cardSprite;
-      card3Actual.use(sprite(card3ActualSprite));
+      cardChange(deck1, card3Actual, card3ActualSprite);
       changeTurn();
     });
     clicks('waitButton', () => {
       //if you wait too many times, you run out of cards! - this is good
       deck1.shuffleDeck();
-      card1Actual.value = deck1.deckCards.pop();
-      card1ActualSprite = card1Actual.value.cardSprite;
-      card1Actual.use(sprite(card1ActualSprite)); //adds or override existing component
-
-      card2Actual.value = deck1.deckCards.pop();
-      card2ActualSprite = card2Actual.value.cardSprite;
-      card2Actual.use(sprite(card2ActualSprite));
-
-      card3Actual.value = deck1.deckCards.pop();
-      card3ActualSprite = card3Actual.value.cardSprite;
-      card3Actual.use(sprite(card3ActualSprite));
-
+      cardChange(deck1, card1Actual, card1ActualSprite);
+      cardChange(deck1, card2Actual, card2ActualSprite);
+      cardChange(deck1, card3Actual, card3ActualSprite);
       console.log(deck1.deckCards);
       changeTurn();
     });
@@ -212,5 +197,12 @@ scene('level1', ()=> {
   });
 
 });
+
+//FUNCTIONS
+function cardChange(deckTemp, cardActualTemp, cardActualSpriteTemp) {
+  cardActualTemp.value = deckTemp.deckCards.pop();
+  cardActualSpriteTemp = cardActualTemp.value.cardSprite;
+  cardActualTemp.use(sprite(cardActualSpriteTemp));
+}
 
 go('level1');
