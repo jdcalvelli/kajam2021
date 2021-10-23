@@ -46,7 +46,9 @@ scene('level1', ()=> {
 
   //level text basic
   add([
-    text('level = 1'),
+    text('1'),
+    origin('center'),
+    pos(width()/2, 48)
   ]);
 
   //add hand of cards left counter
