@@ -56,6 +56,7 @@ scene('main', ()=> {
   //deck initialization
   const deck1 = new Deck;
   deck1.instantiateDeckCards();
+  deck1.shuffleDeck();
 
   //setting initial card sprites
   let card1ActualSprite = deck1.deckCards[deck1.deckCards.length - 1].cardSprite;

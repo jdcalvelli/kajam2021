@@ -27,4 +27,20 @@ export default class Deck {
       this.deckCards[i] = new Card(null, null, 'right', 'rightSprite');
     }
   }
+
+  //method to shuffle cards
+  shuffleDeck() {
+    //for 1000 turns
+    //switch the value of two random cards
+    for (let i = 0; i < 1000; i++) {
+      let deckLocation1 = Math.floor(Math.random() * this.deckCards.length);
+      let deckLocation2 = Math.floor(Math.random() * this.deckCards.length);
+      let oldLocation1 = this.deckCards[deckLocation1];
+
+      this.deckCards[deckLocation1] = this.deckCards[deckLocation2];
+      this.deckCards[deckLocation2] = oldLocation1;
+
+    }
+  }
+
 }
