@@ -53,10 +53,21 @@ scene('level1', ()=> {
     'enemy'
   ]);
 
+  //wait button creation
+  const waitButton = add([
+    text('wait'),
+    scale(0.5),
+    pos(384 + 124, 320),
+    area(),
+    'waitButton'
+  ]);
+
   //deck initialization
   const deck1 = new Deck;
   deck1.instantiateDeckCards();
   deck1.shuffleDeck();
+
+  console.log(deck1.deckCards);
 
   //setting initial card sprites
   let card1ActualSprite = deck1.deckCards[deck1.deckCards.length - 1].cardSprite;
@@ -121,6 +132,24 @@ scene('level1', ()=> {
       card3Actual.value = deck1.deckCards.pop();
       card3ActualSprite = card3Actual.value.cardSprite;
       card3Actual.use(sprite(card3ActualSprite));
+      changeTurn();
+    });
+    clicks('waitButton', () => {
+      //if you wait too many times, you run out of cards! - this is good
+      deck1.shuffleDeck();
+      card1Actual.value = deck1.deckCards.pop();
+      card1ActualSprite = card1Actual.value.cardSprite;
+      card1Actual.use(sprite(card1ActualSprite)); //adds or override existing component
+
+      card2Actual.value = deck1.deckCards.pop();
+      card2ActualSprite = card2Actual.value.cardSprite;
+      card2Actual.use(sprite(card2ActualSprite));
+
+      card3Actual.value = deck1.deckCards.pop();
+      card3ActualSprite = card3Actual.value.cardSprite;
+      card3Actual.use(sprite(card3ActualSprite));
+
+      console.log(deck1.deckCards);
       changeTurn();
     });
   }
