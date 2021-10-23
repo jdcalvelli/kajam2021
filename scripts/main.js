@@ -27,6 +27,19 @@ scene('level1', ()=> {
   //GLOBAL VARS
   let moveAmount = 32; //enemy movement amount
 
+  //DECK INITIALIZATION
+  const deck1 = new Deck;
+  deck1.instantiateDeckCards();
+  deck1.shuffleDeck();
+
+  console.log(deck1.deckCards);
+
+  //setting initial card sprites
+  let card1ActualSprite = deck1.deckCards[deck1.deckCards.length - 1].cardSprite;
+  let card2ActualSprite = deck1.deckCards[deck1.deckCards.length - 2].cardSprite;
+  let card3ActualSprite = deck1.deckCards[deck1.deckCards.length - 3].cardSprite;
+
+
   //GAME OBJECTS
   //add level
   addLevel(level1Map, level1MapConfig);
@@ -34,6 +47,16 @@ scene('level1', ()=> {
   //level text basic
   add([
     text('level = 1'),
+  ]);
+
+  //add hand of cards left counter
+  const cardsLeftText = add([
+    text('cards left: ' + deck1.deckCards.length, {
+      width: 128,
+    }),
+    scale(0.25),
+    pos(0, 320),
+    'cardsLeftText'
   ]);
 
   //player creation
@@ -61,18 +84,6 @@ scene('level1', ()=> {
     area(),
     'waitButton'
   ]);
-
-  //deck initialization
-  const deck1 = new Deck;
-  deck1.instantiateDeckCards();
-  deck1.shuffleDeck();
-
-  console.log(deck1.deckCards);
-
-  //setting initial card sprites
-  let card1ActualSprite = deck1.deckCards[deck1.deckCards.length - 1].cardSprite;
-  let card2ActualSprite = deck1.deckCards[deck1.deckCards.length - 2].cardSprite;
-  let card3ActualSprite = deck1.deckCards[deck1.deckCards.length - 3].cardSprite;
 
   //drawing card game objects
   const card1Actual = add([
@@ -190,6 +201,14 @@ scene('level1', ()=> {
   collides('enemy', 'impassable-wall', () => {
     moveAmount = -moveAmount;
   });
+
+  //UPDATES
+  action('cardsLeftText', () => {
+    cardsLeftText.use(text('cards left: ' + deck1.deckCards.length, {
+          width: 128,
+        }),);
+  });
+
 });
 
 go('level1');
