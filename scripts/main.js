@@ -58,6 +58,9 @@ scene('main', ()=> {
       || player.pos.y < enemy.pos.y - 32 || player.pos.y > enemy.pos.y + 32) {
           enemy.moveBy(0, moveAmount);
     }
+    else {
+      enemy.moveTo(player.pos.x, player.pos.y, 1); //last arg is pixels per second
+    }
   });
   collides('enemy', 'impassable-wall', () => {
     moveAmount = -moveAmount;
