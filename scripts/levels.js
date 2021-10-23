@@ -22,7 +22,10 @@ const level1MapConfig = {
   width: 32,
   height: 32,
   '=': () => [
-    sprite('holdoverTile'),
+    sprite('tileset', {
+      frame: 6,
+    }),
+    scale(0.16) //not sure why this scale works but it looks the best rn
   ],
   '*': () => [
     area({

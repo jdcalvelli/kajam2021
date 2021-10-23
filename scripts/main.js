@@ -21,6 +21,11 @@ loadSprite('rightSprite', './assets/right.png');
 
 //loading in tiles for use in levels.js
 loadSprite('holdoverTile', './assets/holdoverTile.png');
+//loading in new tileset
+loadSprite('tileset', './assets/tileset.png', {
+  sliceX: 3, //number of cuts to make, not the pixel size of the individual cuts
+  sliceY: 4,
+});
 
 scene('level1', ()=> {
 
@@ -204,5 +209,10 @@ function cardChange(deckTemp, cardActualTemp, cardActualSpriteTemp) {
   cardActualSpriteTemp = cardActualTemp.value.cardSprite;
   cardActualTemp.use(sprite(cardActualSpriteTemp));
 }
+
+//implement new tileset
+//tiles are 200 by 200, which means scale needs to be 0.32
+//update the map screen to reflect the right tiles in the right place
+//see screenshots from video to help with tile slicing
 
 go('level1');
