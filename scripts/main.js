@@ -22,7 +22,7 @@ loadSprite('rightSprite', './assets/right.png');
 //loading in tiles for use in levels.js
 loadSprite('holdoverTile', './assets/holdoverTile.png');
 
-scene('main', ()=> {
+scene('level1', ()=> {
 
   //GLOBAL VARS
   let moveAmount = 32; //enemy movement amount
@@ -153,11 +153,14 @@ scene('main', ()=> {
     console.log('collide w wall');
     destroy(player);
   });
+  collides('player', 'end-flag', () => {
+    //add move to next level
+    go('level2');
+  });
   //enemy collisions
   collides('enemy', 'impassable-wall', () => {
     moveAmount = -moveAmount;
   });
-
 });
 
-go('main');
+go('level1');

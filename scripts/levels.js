@@ -7,7 +7,7 @@ const level1Map = [
   '    *==========*    ', //level area here
   '    *==========*    ',
   '    *==========*    ',
-  '    *==========*    ',
+  '    *&=========*    ',
   '    *==========*    ',
   '    *==========*    ', //to here
   '     **********     ',
@@ -30,6 +30,13 @@ const level1MapConfig = {
       height: 32,
     }),
     'impassable-wall'
+  ],
+  '&': () => [
+    area({
+      width: 32,
+      height: 32,
+    }),
+    'end-flag'
   ],
 }
 
