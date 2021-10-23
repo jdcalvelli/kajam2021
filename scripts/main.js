@@ -2,7 +2,8 @@ import kaboom from "https://unpkg.com/kaboom@next/dist/kaboom.mjs";
 
 import Card from "./card.js";
 import Deck from "./deck.js";
-import drawline from "./drawline.js";
+import drawline from "./drawline.js"; //marked for removal potentially?
+import {turnStatus, changeTurn} from "./turnsystem.js";
 
 import {level1Map, level1MapConfig} from "./levels.js";
 
@@ -23,6 +24,10 @@ loadSprite('holdoverTile', './assets/holdoverTile.png');
 
 scene('main', ()=> {
 
+  //GLOBAL VARS
+  let moveAmount = 32; //enemy movement amount
+
+  //GAME OBJECTS
   //add level
   addLevel(level1Map, level1MapConfig);
 
@@ -47,34 +52,6 @@ scene('main', ()=> {
     area(),
     'enemy'
   ]);
-
-  //enemy ai
-  //want the enemy to follow a set path, then if the player is within a certain
-  //number of blocks of them, it should go to them
-  let moveAmount = 1;
-  action('enemy', () => {
-    //checks to see if player is outside of 1 tile of enemy
-    if (player.pos.x < enemy.pos.x - 32 || player.pos.x > enemy.pos.x + 32
-      || player.pos.y < enemy.pos.y - 32 || player.pos.y > enemy.pos.y + 32) {
-          enemy.moveBy(0, moveAmount);
-    }
-    else {
-      enemy.moveTo(player.pos.x, player.pos.y, 1); //last arg is pixels per second
-    }
-  });
-  collides('enemy', 'impassable-wall', () => {
-    moveAmount = -moveAmount;
-  });
-
-  //game logic
-  //player collision
-  collides('player', 'enemy', () => {
-    destroy(player);
-  });
-  collides('player', 'impassable-wall', () => {
-    console.log('collide w wall');
-    destroy(player);
-  });
 
   //deck initialization
   const deck1 = new Deck;
@@ -119,24 +96,64 @@ scene('main', ()=> {
     }
   ]);
 
-  //on click for each card, execute card action, update card value, update card sprite
-  clicks('card1Actual', ()=> {
-    player.moveBy(card1Actual.value.executeCardAction());
-    card1Actual.value = deck1.deckCards.pop();
-    card1ActualSprite = card1Actual.value.cardSprite;
-    card1Actual.use(sprite(card1ActualSprite)); //adds or override existing component
+  //TURN ORDER CONTROLLER + movement (turn status needs to be checked every frame)  
+  if (turnStatus > 0) { //meaning it is the player's turn
+    //allow player movement using cards
+    //on click for each card, execute card action, update card value, update card sprite
+    clicks('card1Actual', ()=> {
+      player.moveBy(card1Actual.value.executeCardAction());
+      card1Actual.value = deck1.deckCards.pop();
+      card1ActualSprite = card1Actual.value.cardSprite;
+      card1Actual.use(sprite(card1ActualSprite)); //adds or override existing component
+      changeTurn();
+    });
+    clicks('card2Actual', ()=> {
+      player.moveBy(card2Actual.value.executeCardAction());
+      card2Actual.value = deck1.deckCards.pop();
+      card2ActualSprite = card2Actual.value.cardSprite;
+      card2Actual.use(sprite(card2ActualSprite));
+      changeTurn();
+    });
+    clicks('card3Actual', ()=> {
+      player.moveBy(card3Actual.value.executeCardAction());
+      card3Actual.value = deck1.deckCards.pop();
+      card3ActualSprite = card3Actual.value.cardSprite;
+      card3Actual.use(sprite(card3ActualSprite));
+      changeTurn();
+    });
+  } else if (turnStatus < 0) { //meaning it's enemy turn, doesn't run because turn status situaiton isnt checked every frame
+    //enemy movement
+    //enemy ai
+    //want the enemy to follow a set path, then if the player is within a certain
+    //number of blocks of them, it should go to them
+    action('enemy', () => {
+      //checks to see if player is outside of 1 tile of enemy
+      if (player.pos.x < enemy.pos.x - 32 || player.pos.x > enemy.pos.x + 32
+        || player.pos.y < enemy.pos.y - 32 || player.pos.y > enemy.pos.y + 32) {
+            enemy.moveBy(0, moveAmount);
+            changeTurn();
+      }
+      else {
+        enemy.moveTo(player.pos.x, player.pos.y, moveAmount); //last arg is pixels per second
+        changeTurn();
+      }
+    });
+  } else {
+    console.log('something went seriously wrong lmao');
+  }
+
+  //COLLISIONS
+  //player collision
+  collides('player', 'enemy', () => {
+    destroy(player);
   });
-  clicks('card2Actual', ()=> {
-    player.moveBy(card2Actual.value.executeCardAction());
-    card2Actual.value = deck1.deckCards.pop();
-    card2ActualSprite = card2Actual.value.cardSprite;
-    card2Actual.use(sprite(card2ActualSprite));
+  collides('player', 'impassable-wall', () => {
+    console.log('collide w wall');
+    destroy(player);
   });
-  clicks('card3Actual', ()=> {
-    player.moveBy(card3Actual.value.executeCardAction());
-    card3Actual.value = deck1.deckCards.pop();
-    card3ActualSprite = card3Actual.value.cardSprite;
-    card3Actual.use(sprite(card3ActualSprite));
+  //enemy collisions
+  collides('enemy', 'impassable-wall', () => {
+    moveAmount = -moveAmount;
   });
 
 });
