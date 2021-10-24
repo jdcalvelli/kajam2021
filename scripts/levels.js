@@ -18,6 +18,9 @@ const level1Map = [
   '                    ',
 ]
 
+
+//this can probably be generalized beyond just level1 bc all levels
+//will use the same config for ascii to sprite
 const level1MapConfig = {
   width: 32,
   height: 32,

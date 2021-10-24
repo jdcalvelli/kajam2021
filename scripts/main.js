@@ -1,3 +1,7 @@
+//next - make the first level with one enemy
+//then - make the next level with more than one enemy
+//to do on plane -- draw out the first 5 levels on paper
+
 import kaboom from "https://unpkg.com/kaboom@next/dist/kaboom.mjs";
 
 import Card from "./card.js";
@@ -19,9 +23,7 @@ loadSprite('downSprite', './assets/down.png');
 loadSprite('leftSprite', './assets/left.png');
 loadSprite('rightSprite', './assets/right.png');
 
-//loading in tiles for use in levels.js
-loadSprite('holdoverTile', './assets/holdoverTile.png');
-//loading in new tileset
+//loading in new tileset for use in levels.js
 loadSprite('tileset', './assets/tileset.png', {
   sliceX: 3, //number of cuts to make, not the pixel size of the individual cuts
   sliceY: 4,
@@ -86,8 +88,8 @@ scene('level1', ()=> {
   //wait button creation
   const waitButton = add([
     text('wait'),
-    scale(0.5),
-    pos(384 + 124, 320),
+    scale(0.35),
+    pos(384 + 124 + 64, 320),
     area(),
     'waitButton'
   ]);
@@ -95,7 +97,8 @@ scene('level1', ()=> {
   //drawing card game objects
   const card1Actual = add([
     rect(96, 160),
-    pos(128, 320),
+    pos(96, 320),
+    scale(0.106),
     sprite(card1ActualSprite),
     area(),
     'card1Actual',
@@ -107,6 +110,7 @@ scene('level1', ()=> {
   const card2Actual = add([
     rect(96, 160),
     pos(256, 320),
+    scale(0.106),
     sprite(card2ActualSprite),
     area(),
     'card2Actual',
@@ -117,7 +121,8 @@ scene('level1', ()=> {
 
   const card3Actual = add([
     rect(96, 160),
-    pos(384, 320),
+    pos(416, 320),
+    scale(0.106),
     sprite(card3ActualSprite),
     area(),
     'card3Actual',
@@ -209,10 +214,5 @@ function cardChange(deckTemp, cardActualTemp, cardActualSpriteTemp) {
   cardActualSpriteTemp = cardActualTemp.value.cardSprite;
   cardActualTemp.use(sprite(cardActualSpriteTemp));
 }
-
-//implement new tileset
-//tiles are 200 by 200, which means scale needs to be 0.32
-//update the map screen to reflect the right tiles in the right place
-//see screenshots from video to help with tile slicing
 
 go('level1');
