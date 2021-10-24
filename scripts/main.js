@@ -15,6 +15,7 @@ import {level1Map, level1MapConfig} from "./levels.js";
 kaboom({
   width: 640,
   height: 480,
+  background: [211, 211, 211]
 })
 
 //loading sprites OUTSIDE OF SCENE ALWAYS
