@@ -70,7 +70,7 @@ scene('level1', ()=> {
 
   //GAME OBJECTS
   //add level
-  addLevel(level1Map, level1MapConfig);
+  addLevel(level1Map, levelMapConfig);
 
   //level text basic
   add([
