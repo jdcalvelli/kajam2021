@@ -9,7 +9,7 @@ import Deck from "./deck.js";
 
 import {turnStatus, changeTurn} from "./turnsystem.js";
 
-import {level1Map, level1MapConfig} from "./levels.js";
+import {level1Map, levelMapConfig} from "./levels.js";
 
 //creating basic kaboom instance
 kaboom({

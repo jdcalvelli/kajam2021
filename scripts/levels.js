@@ -95,4 +95,4 @@ const levelMapConfig = {
   ]
 }
 
-export {level1Map, level1MapConfig}
+export {level1Map, levelMapConfig}
