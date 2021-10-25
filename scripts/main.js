@@ -50,12 +50,6 @@ loadSprite('playerSpritesheet', './assets/playerSpritesheet.png', {
 
 scene('level1', ()=> {
 
-
-  add([
-    sprite('bear'),
-    scale(0.05)
-  ]);
-
   //GLOBAL VARS
   let moveAmount = 32; //enemy movement amount
 
@@ -110,10 +104,14 @@ scene('level1', ()=> {
 
   //enemy creation
   const enemy = add([
-    rect(32, 32),
+    sprite('bear'),
+    origin('botleft'),
+    scale(0.06),
     pos(352, 192),
-    color(124, 0, 0),
-    area(),
+    area({
+      width: 32,
+      height: 32,
+    }),
     'enemy'
   ]);
 
