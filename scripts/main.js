@@ -30,7 +30,23 @@ loadSprite('tileset', './assets/tileset.png', {
   sliceY: 4,
 });
 
+loadSprite('playerSpritesheet', './assets/playerSpritesheet.png', {
+  sliceX: 5,
+  sliceY: 3,
+  anims: {
+    idle: {from: 7, to: 7},
+    run: { from: 7, to: 6}
+  }
+});
+
 scene('level1', ()=> {
+
+  add([
+    sprite('playerSpritesheet', {
+      frame: 7,
+    }),
+    scale(0.16),
+  ]);
 
   //GLOBAL VARS
   let moveAmount = 32; //enemy movement amount
