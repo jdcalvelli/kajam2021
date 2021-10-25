@@ -38,6 +38,7 @@ const level1MapConfig = {
     'impassable-wall'
   ],
   '&': () => [
+    sprite('checkeredFlag'),
     area({
       width: 32,
       height: 32,

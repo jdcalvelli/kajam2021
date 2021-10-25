@@ -38,6 +38,8 @@ loadSprite('tileset', './assets/tileset.png', {
   sliceY: 4,
 });
 
+loadSprite('checkeredFlag', './assets/checkeredflag.png');
+
 //loading in player spritesheet
 loadSprite('playerSpritesheet', './assets/playerSpritesheet.png', {
   sliceX: 5,
