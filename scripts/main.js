@@ -18,11 +18,19 @@ kaboom({
   background: [211, 211, 211]
 })
 
-//loading sprites OUTSIDE OF SCENE ALWAYS
+//loading card sprites OUTSIDE OF SCENE ALWAYS
 loadSprite('upSprite', './assets/up.png');
 loadSprite('downSprite', './assets/down.png');
 loadSprite('leftSprite', './assets/left.png');
 loadSprite('rightSprite', './assets/right.png');
+
+//loading in enemy sprites
+loadSprite('octopus', './assets/enemyOptions/octopus.png');
+loadSprite('rabbit', './assets/enemyOptions/rabbit.png');
+loadSprite('lion', './assets/enemyOptions/lion.png');
+loadSprite('fox', './assets/enemyOptions/fox.png');
+loadSprite('caterpillar', './assets/enemyOptions/caterpillar.png');
+loadSprite('bear', './assets/enemyOptions/bear.png');
 
 //loading in new tileset for use in levels.js
 loadSprite('tileset', './assets/tileset.png', {
@@ -30,6 +38,7 @@ loadSprite('tileset', './assets/tileset.png', {
   sliceY: 4,
 });
 
+//loading in player spritesheet
 loadSprite('playerSpritesheet', './assets/playerSpritesheet.png', {
   sliceX: 5,
   sliceY: 3,
@@ -40,6 +49,12 @@ loadSprite('playerSpritesheet', './assets/playerSpritesheet.png', {
 });
 
 scene('level1', ()=> {
+
+
+  add([
+    sprite('bear'),
+    scale(0.05)
+  ]);
 
   //GLOBAL VARS
   let moveAmount = 32; //enemy movement amount
