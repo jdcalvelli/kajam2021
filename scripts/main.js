@@ -41,13 +41,6 @@ loadSprite('playerSpritesheet', './assets/playerSpritesheet.png', {
 
 scene('level1', ()=> {
 
-  add([
-    sprite('playerSpritesheet', {
-      frame: 7,
-    }),
-    scale(0.16),
-  ]);
-
   //GLOBAL VARS
   let moveAmount = 32; //enemy movement amount
 
@@ -88,8 +81,15 @@ scene('level1', ()=> {
   //player creation
   const player = add([
     pos(288, 192),
-    rect(32, 32),
-    area(),
+    origin('botleft'),
+    sprite('playerSpritesheet', {
+      frame: 7
+    }),
+    scale(0.16),
+    area({
+      width: 32,
+      height: 32,
+    }),
     'player'
   ]);
 
@@ -192,7 +192,7 @@ scene('level1', ()=> {
             changeTurn();
       }
       else {
-        enemy.moveTo(player.pos.x, player.pos.y, 10000); //last arg is pixels per second
+        enemy.moveTo(player.pos.x, player.pos.y, 15); //last arg is pixels per second
         changeTurn();
       }
     }
