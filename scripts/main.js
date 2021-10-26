@@ -896,7 +896,7 @@ function registerPlayerCollisions(player, moveAmount, nextLevel) {
   });
   collides('player', 'impassable-wall', () => {
     console.log('collide w wall');
-    destroy(player);
+    go('gameOver_Wall');
   });
   collides('player', 'end-flag', () => {
     //add move to next level
