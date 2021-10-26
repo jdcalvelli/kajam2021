@@ -72,6 +72,25 @@ const level3Map = [
   '                    ',
 ]
 
+const level4Map = [
+  '                    ', //top ui area
+  '                    ',
+  '  *****       ***** ',
+  ' *1+++2*     *1+++2*', //level area here
+  ' *|.&.!*     *|...!*',
+  ' *|...!*******|...!*',
+  ' *|....+++++++....!*',
+  ' *|...............!*',
+  ' *3---------------4*', //to here
+  '  ***************** ',
+  '                    ', //card area below here
+  '                    ',
+  '                    ',
+  '                    ',
+  '                    ',
+]
+
+
 const TEMPLATE = [
   '                    ', //top ui area
   '                    ',
@@ -89,7 +108,6 @@ const TEMPLATE = [
   '                    ',
   '                    ',
 ]
-
 
 //this can probably be generalized beyond just level1 bc all levels
 //will use the same config for ascii to sprite
@@ -167,4 +185,4 @@ const levelMapConfig = {
   ]
 }
 
-export {level0Map, level1Map, level2Map, level3Map, levelMapConfig}
+export {level0Map, level1Map, level2Map, level3Map, level4Map, levelMapConfig}
