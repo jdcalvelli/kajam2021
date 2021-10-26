@@ -9,7 +9,7 @@ import Deck from "./deck.js";
 
 import {turnStatus, changeTurn} from "./turnsystem.js";
 
-import {level1Map, levelMapConfig} from "./levels.js";
+import {level0Map, level1Map, levelMapConfig} from "./levels.js";
 
 //creating basic kaboom instance
 kaboom({
@@ -49,6 +49,112 @@ loadSprite('playerSpritesheet', './assets/playerSpritesheet.png', {
     run: { from: 7, to: 6}
   }
 });
+
+
+//SCENE 0
+
+
+scene('level0', ()=> {
+  let moveAmount = 32;
+
+  const deck0 = new Deck;
+  deck0.instantiateDeckCards();
+  deck0.shuffleDeck();
+
+  let card1ActualSprite = deck0.deckCards[deck0.deckCards.length - 1].cardSprite;
+  let card2ActualSprite = deck0.deckCards[deck0.deckCards.length - 2].cardSprite;
+  let card3ActualSprite = deck0.deckCards[deck0.deckCards.length - 3].cardSprite;
+
+  addLevel(level0Map, levelMapConfig);
+
+  //level text basic
+  add([
+    text('0'),
+    origin('center'),
+    pos(width()/2, 48)
+  ]);
+
+  //add hand of cards left counter
+  const cardsLeftText = add([
+    text('cards left: ' + deck0.deckCards.length, {
+      width: 128,
+    }),
+    scale(0.25),
+    pos(0, 320),
+    'cardsLeftText'
+  ]);
+
+  //player creation
+  const player = add([
+    pos(288-96, 192),
+    origin('botleft'),
+    sprite('playerSpritesheet', {
+      frame: 7,
+      flipX: true,
+    }),
+    scale(0.16),
+    area({
+      width: 32,
+      height: 32,
+    }),
+    'player'
+  ]);
+
+  //wait button creation
+  const waitButton = add([
+    text('wait'),
+    scale(0.35),
+    pos(384 + 124 + 64, 320),
+    area(),
+    'waitButton'
+  ]);
+
+  //drawing card game objects
+  const card1Actual = add([
+    rect(96, 160),
+    pos(96, 320),
+    scale(0.106),
+    sprite(card1ActualSprite),
+    area(),
+    'card1Actual',
+    {
+      value: deck0.deckCards.pop(),
+    }
+  ]);
+
+  const card2Actual = add([
+    rect(96, 160),
+    pos(256, 320),
+    scale(0.106),
+    sprite(card2ActualSprite),
+    area(),
+    'card2Actual',
+    {
+      value: deck0.deckCards.pop()
+    }
+  ]);
+
+  const card3Actual = add([
+    rect(96, 160),
+    pos(416, 320),
+    scale(0.106),
+    sprite(card3ActualSprite),
+    area(),
+    'card3Actual',
+    {
+      value: deck0.deckCards.pop()
+    }
+  ]);
+
+  cardController(player, deck0, card1Actual, card2Actual, card3Actual, card1ActualSprite, card2ActualSprite, card3ActualSprite);
+  cardsLeftTextUpdate(cardsLeftText, deck0);
+  registerCollisions(player, moveAmount, 'level1');
+
+});
+
+
+//SCENE 1
+
 
 scene('level1', ()=> {
 
@@ -163,37 +269,6 @@ scene('level1', ()=> {
     }
   ]);
 
-
-  //TURN ORDER CONTROLLER + movement (turn status needs to be checked every frame)
-  if (turnStatus > 0) { //meaning it is the player's turn
-    //allow player movement using cards
-    //on click for each card, execute card action, update card value, update card sprite
-    clicks('card1Actual', ()=> {
-      player.moveBy(card1Actual.value.executeCardAction());
-      cardChange(deck1, card1Actual, card1ActualSprite);
-      changeTurn();
-    });
-    clicks('card2Actual', ()=> {
-      player.moveBy(card2Actual.value.executeCardAction());
-      cardChange(deck1, card2Actual, card2ActualSprite);
-      changeTurn();
-    });
-    clicks('card3Actual', ()=> {
-      player.moveBy(card3Actual.value.executeCardAction());
-      cardChange(deck1, card3Actual, card3ActualSprite);
-      changeTurn();
-    });
-    clicks('waitButton', () => {
-      //if you wait too many times, you run out of cards! - this is good
-      deck1.shuffleDeck();
-      cardChange(deck1, card1Actual, card1ActualSprite);
-      cardChange(deck1, card2Actual, card2ActualSprite);
-      cardChange(deck1, card3Actual, card3ActualSprite);
-      console.log(deck1.deckCards);
-      changeTurn();
-    });
-  }
-
   action ('enemy', () => {
     if (turnStatus < 0) { //meaning it's enemy turn, doesn't run because turn status situaiton isnt checked every frame
       //enemy movement
@@ -213,6 +288,56 @@ scene('level1', ()=> {
     }
   });
 
+});
+
+//FUNCTIONS
+function cardChange(deckTemp, cardActualTemp, cardActualSpriteTemp) {
+  cardActualTemp.value = deckTemp.deckCards.pop();
+  cardActualSpriteTemp = cardActualTemp.value.cardSprite;
+  cardActualTemp.use(sprite(cardActualSpriteTemp));
+}
+
+function cardController(player, deck, card1Actual, card2Actual, card3Actual, card1ActualSprite, card2ActualSprite, card3ActualSprite) {
+  //TURN ORDER CONTROLLER + movement (turn status needs to be checked every frame)
+  if (turnStatus > 0) { //meaning it is the player's turn
+    //allow player movement using cards
+    //on click for each card, execute card action, update card value, update card sprite
+    clicks('card1Actual', ()=> {
+      player.moveBy(card1Actual.value.executeCardAction());
+      cardChange(deck, card1Actual, card1ActualSprite);
+      changeTurn();
+    });
+    clicks('card2Actual', ()=> {
+      player.moveBy(card2Actual.value.executeCardAction());
+      cardChange(deck, card2Actual, card2ActualSprite);
+      changeTurn();
+    });
+    clicks('card3Actual', ()=> {
+      player.moveBy(card3Actual.value.executeCardAction());
+      cardChange(deck, card3Actual, card3ActualSprite);
+      changeTurn();
+    });
+    clicks('waitButton', () => {
+      //if you wait too many times, you run out of cards! - this is good
+      deck.shuffleDeck();
+      cardChange(deck, card1Actual, card1ActualSprite);
+      cardChange(deck, card2Actual, card2ActualSprite);
+      cardChange(deck, card3Actual, card3ActualSprite);
+      console.log(deck.deckCards);
+      changeTurn();
+    });
+  }
+}
+
+function cardsLeftTextUpdate(cardsLeftText, deck) {
+  action('cardsLeftText', () => {
+    cardsLeftText.use(text('cards left: ' + deck.deckCards.length, {
+          width: 128,
+        }),);
+  });
+}
+
+function registerCollisions(player, moveAmount, nextLevel) {
   //COLLISIONS
   //player collision
   collides('player', 'enemy', () => {
@@ -224,27 +349,14 @@ scene('level1', ()=> {
   });
   collides('player', 'end-flag', () => {
     //add move to next level
-    go('level2');
+    go(nextLevel);
   });
   //enemy collisions
   collides('enemy', 'impassable-wall', () => {
     moveAmount = -moveAmount;
   });
-
-  //UPDATES
-  action('cardsLeftText', () => {
-    cardsLeftText.use(text('cards left: ' + deck1.deckCards.length, {
-          width: 128,
-        }),);
-  });
-
-});
-
-//FUNCTIONS
-function cardChange(deckTemp, cardActualTemp, cardActualSpriteTemp) {
-  cardActualTemp.value = deckTemp.deckCards.pop();
-  cardActualSpriteTemp = cardActualTemp.value.cardSprite;
-  cardActualTemp.use(sprite(cardActualSpriteTemp));
 }
 
-go('level1');
+
+
+go('level0');

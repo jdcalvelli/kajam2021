@@ -1,5 +1,23 @@
 import kaboom from "https://unpkg.com/kaboom@next/dist/kaboom.mjs";
 
+const level0Map = [
+  '                    ', //top ui area
+  '                    ',
+  '                    ',
+  '     **********      ', //level area here
+  '    *1++++++++2*    ',
+  '    *|.......&!*    ',
+  '    *3--------4*    ',
+  '     **********     ',
+  '                    ', //to here
+  '                    ',
+  '                    ', //card area below here
+  '                    ',
+  '                    ',
+  '                    ',
+  '                    ',
+]
+
 const level1Map = [
   '                    ', //top ui area
   '                    ',
@@ -95,4 +113,4 @@ const levelMapConfig = {
   ]
 }
 
-export {level1Map, levelMapConfig}
+export {level0Map, level1Map, levelMapConfig}
