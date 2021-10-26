@@ -564,7 +564,10 @@ scene('level3', () =>{
 scene('level4', () =>{
 
   //GLOBAL VARS
-  let moveAmount = 32; //enemy movement amount
+  let moveAmount = 32;
+  let enemiesMoved = 0; //to fix changeTurn
+  let lionMoveAmount = 32;
+  let octopusMoveAmount = 32;
 
   //DECK INITIALIZATION
   const deck4 = new Deck(60);
@@ -702,12 +705,12 @@ scene('level4', () =>{
       //checks to see if player is outside of 1 tile of enemy
       if (player.pos.x < enemyLion.pos.x - 32 || player.pos.x > enemyLion.pos.x + 32
         || player.pos.y < enemyLion.pos.y - 32 || player.pos.y > enemyLion.pos.y + 32) {
-            enemyLion.moveBy(0, moveAmount);
-            changeTurn();
+            enemyLion.moveBy(0, lionMoveAmount);
+            enemiesMoved++;
       }
       else {
         enemyLion.moveTo(player.pos.x, player.pos.y, ); //last arg is pixels per second
-        changeTurn();
+        enemiesMoved++;
       }
     }
   });
@@ -717,22 +720,29 @@ scene('level4', () =>{
     if (turnStatus < 0) {
       if (player.pos.x < enemyOctopus.pos.x - 32 || player.pos.x > enemyOctopus.pos.x + 32
         || player.pos.y < enemyOctopus.pos.y - 32 || player.pos.y > enemyOctopus.pos.y + 32) {
-            enemyOctopus.moveBy(moveAmount, 0);
-            //changeTurn();
+            enemyOctopus.moveBy(octopusMoveAmount, 0);
+            enemiesMoved++;
       }
       else {
         enemyOctopus.moveTo(player.pos.x, player.pos.y, ); //last arg is pixels per second
-        //changeTurn();
+        enemiesMoved++;
       }
+    }
+  });
+
+  action(() => {
+    if (enemiesMoved == 2) {
+      changeTurn();
+      enemiesMoved = 0;
     }
   });
 
   //enemy collisions
   collides('enemyLion', 'impassable-wall', () => {
-    moveAmount = -moveAmount;
+    lionMoveAmount = -lionMoveAmount;
   });
   collides('enemyOctopus', 'impassable-wall', () => {
-    moveAmount = -moveAmount;
+    octopusMoveAmount = -octopusMoveAmount;
   });
   collides('enemyLion', 'player', () => {
     go('gameOver_Enemy');
