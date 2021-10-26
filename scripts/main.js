@@ -534,7 +534,7 @@ scene('level3', () =>{
 
   //enemy creation
   const enemy = add([
-    sprite('bear'),
+    sprite('fox'),
     origin('botleft'),
     scale(0.06),
     pos(352-160, 192),
