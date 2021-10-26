@@ -57,7 +57,7 @@ loadSprite('playerSpritesheet', './assets/playerSpritesheet.png', {
 scene('level0', ()=> {
   let moveAmount = 32;
 
-  const deck0 = new Deck;
+  const deck0 = new Deck(24);
   deck0.instantiateDeckCards();
   deck0.shuffleDeck();
 
@@ -162,7 +162,7 @@ scene('level1', ()=> {
   let moveAmount = 32; //enemy movement amount
 
   //DECK INITIALIZATION
-  const deck1 = new Deck;
+  const deck1 = new Deck(36);
   deck1.instantiateDeckCards();
   deck1.shuffleDeck();
 
@@ -273,7 +273,7 @@ scene('level2', () =>{
   let moveAmount = 32; //enemy movement amount
 
   //DECK INITIALIZATION
-  const deck2 = new Deck;
+  const deck2 = new Deck(48);
   deck2.instantiateDeckCards();
   deck2.shuffleDeck();
 
@@ -420,7 +420,7 @@ scene('level3', () =>{
   let moveAmount = 32; //enemy movement amount
 
   //DECK INITIALIZATION
-  const deck3 = new Deck;
+  const deck3 = new Deck(60);
   deck3.instantiateDeckCards();
   deck3.shuffleDeck();
 
@@ -567,7 +567,7 @@ scene('level4', () =>{
   let moveAmount = 32; //enemy movement amount
 
   //DECK INITIALIZATION
-  const deck4 = new Deck;
+  const deck4 = new Deck(60);
   deck4.instantiateDeckCards();
   deck4.shuffleDeck();
 
