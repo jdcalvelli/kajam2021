@@ -54,6 +54,24 @@ const level2Map = [
   '                    ',
 ]
 
+const level3Map = [
+  '                    ', //top ui area
+  '                    ',
+  '     **********     ',
+  '    *1+++2*    ', //level area here
+  '    *|&..!*****     ',
+  '    *|....++++2*    ',
+  '    *3----....!*    ',
+  '     *****|...!*    ',
+  '         *3---4*    ', //to here
+  '          *****     ',
+  '                    ', //card area below here
+  '                    ',
+  '                    ',
+  '                    ',
+  '                    ',
+]
+
 const TEMPLATE = [
   '                    ', //top ui area
   '                    ',
@@ -149,4 +167,4 @@ const levelMapConfig = {
   ]
 }
 
-export {level0Map, level1Map, level2Map, levelMapConfig}
+export {level0Map, level1Map, level2Map, level3Map, levelMapConfig}
