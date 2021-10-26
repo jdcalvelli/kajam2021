@@ -197,10 +197,11 @@ scene('level1', ()=> {
 
   //player creation
   const player = add([
-    pos(288, 192),
+    pos(288-96, 192-32),
     origin('botleft'),
     sprite('playerSpritesheet', {
-      frame: 7
+      frame: 7,
+      flipX: true,
     }),
     scale(0.16),
     area({
@@ -210,18 +211,18 @@ scene('level1', ()=> {
     'player'
   ]);
 
-  //enemy creation
-  const enemy = add([
-    sprite('bear'),
-    origin('botleft'),
-    scale(0.06),
-    pos(352, 192),
-    area({
-      width: 32,
-      height: 32,
-    }),
-    'enemy'
-  ]);
+  // //enemy creation
+  // const enemy = add([
+  //   sprite('bear'),
+  //   origin('botleft'),
+  //   scale(0.06),
+  //   pos(352, 192),
+  //   area({
+  //     width: 32,
+  //     height: 32,
+  //   }),
+  //   'enemy'
+  // ]);
 
   //wait button creation
   const waitButton = add([
@@ -269,24 +270,28 @@ scene('level1', ()=> {
     }
   ]);
 
-  action ('enemy', () => {
-    if (turnStatus < 0) { //meaning it's enemy turn, doesn't run because turn status situaiton isnt checked every frame
-      //enemy movement
-      //enemy ai
-      //want the enemy to follow a set path, then if the player is within a certain
-      //number of blocks of them, it should go to them
-      //checks to see if player is outside of 1 tile of enemy
-      if (player.pos.x < enemy.pos.x - 32 || player.pos.x > enemy.pos.x + 32
-        || player.pos.y < enemy.pos.y - 32 || player.pos.y > enemy.pos.y + 32) {
-            enemy.moveBy(0, moveAmount);
-            changeTurn();
-      }
-      else {
-        enemy.moveTo(player.pos.x, player.pos.y, 15); //last arg is pixels per second
-        changeTurn();
-      }
-    }
-  });
+  cardController(player, deck1, card1Actual, card2Actual, card3Actual, card1ActualSprite, card2ActualSprite, card3ActualSprite);
+  cardsLeftTextUpdate(cardsLeftText, deck1);
+  registerCollisions(player, moveAmount, 'level2');
+
+  // action ('enemy', () => {
+  //   if (turnStatus < 0) { //meaning it's enemy turn, doesn't run because turn status situaiton isnt checked every frame
+  //     //enemy movement
+  //     //enemy ai
+  //     //want the enemy to follow a set path, then if the player is within a certain
+  //     //number of blocks of them, it should go to them
+  //     //checks to see if player is outside of 1 tile of enemy
+  //     if (player.pos.x < enemy.pos.x - 32 || player.pos.x > enemy.pos.x + 32
+  //       || player.pos.y < enemy.pos.y - 32 || player.pos.y > enemy.pos.y + 32) {
+  //           enemy.moveBy(0, moveAmount);
+  //           changeTurn();
+  //     }
+  //     else {
+  //       enemy.moveTo(player.pos.x, player.pos.y, 15); //last arg is pixels per second
+  //       changeTurn();
+  //     }
+  //   }
+  // });
 
 });
 
@@ -359,4 +364,4 @@ function registerCollisions(player, moveAmount, nextLevel) {
 
 
 
-go('level0');
+go('level1');
