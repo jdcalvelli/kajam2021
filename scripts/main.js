@@ -9,7 +9,7 @@ import Deck from "./deck.js";
 
 import {turnStatus, changeTurn} from "./turnsystem.js";
 
-import {level0Map, level1Map, levelMapConfig} from "./levels.js";
+import {level0Map, level1Map, level2Map, levelMapConfig} from "./levels.js";
 
 //creating basic kaboom instance
 kaboom({
@@ -148,7 +148,7 @@ scene('level0', ()=> {
 
   cardController(player, deck0, card1Actual, card2Actual, card3Actual, card1ActualSprite, card2ActualSprite, card3ActualSprite);
   cardsLeftTextUpdate(cardsLeftText, deck0);
-  registerCollisions(player, moveAmount, 'level1');
+  registerPlayerCollisions(player, moveAmount, 'level1');
 
 });
 
@@ -211,19 +211,6 @@ scene('level1', ()=> {
     'player'
   ]);
 
-  // //enemy creation
-  // const enemy = add([
-  //   sprite('bear'),
-  //   origin('botleft'),
-  //   scale(0.06),
-  //   pos(352, 192),
-  //   area({
-  //     width: 32,
-  //     height: 32,
-  //   }),
-  //   'enemy'
-  // ]);
-
   //wait button creation
   const waitButton = add([
     text('wait'),
@@ -272,27 +259,155 @@ scene('level1', ()=> {
 
   cardController(player, deck1, card1Actual, card2Actual, card3Actual, card1ActualSprite, card2ActualSprite, card3ActualSprite);
   cardsLeftTextUpdate(cardsLeftText, deck1);
-  registerCollisions(player, moveAmount, 'level2');
+  registerPlayerCollisions(player, moveAmount, 'level2');
 
-  // action ('enemy', () => {
-  //   if (turnStatus < 0) { //meaning it's enemy turn, doesn't run because turn status situaiton isnt checked every frame
-  //     //enemy movement
-  //     //enemy ai
-  //     //want the enemy to follow a set path, then if the player is within a certain
-  //     //number of blocks of them, it should go to them
-  //     //checks to see if player is outside of 1 tile of enemy
-  //     if (player.pos.x < enemy.pos.x - 32 || player.pos.x > enemy.pos.x + 32
-  //       || player.pos.y < enemy.pos.y - 32 || player.pos.y > enemy.pos.y + 32) {
-  //           enemy.moveBy(0, moveAmount);
-  //           changeTurn();
-  //     }
-  //     else {
-  //       enemy.moveTo(player.pos.x, player.pos.y, 15); //last arg is pixels per second
-  //       changeTurn();
-  //     }
-  //   }
-  // });
+});
 
+
+//SCENE 2
+
+
+scene('level2', () =>{
+
+  //GLOBAL VARS
+  let moveAmount = 32; //enemy movement amount
+
+  //DECK INITIALIZATION
+  const deck2 = new Deck;
+  deck2.instantiateDeckCards();
+  deck2.shuffleDeck();
+
+  console.log(deck2.deckCards);
+
+  //setting initial card sprites
+  let card1ActualSprite = deck2.deckCards[deck2.deckCards.length - 1].cardSprite;
+  let card2ActualSprite = deck2.deckCards[deck2.deckCards.length - 2].cardSprite;
+  let card3ActualSprite = deck2.deckCards[deck2.deckCards.length - 3].cardSprite;
+
+
+  //GAME OBJECTS
+  //add level
+  addLevel(level2Map, levelMapConfig);
+
+  //level text basic
+  add([
+    text('2'),
+    origin('center'),
+    pos(width()/2, 48)
+  ]);
+
+  //add hand of cards left counter
+  const cardsLeftText = add([
+    text('cards left: ' + deck2.deckCards.length, {
+      width: 128,
+    }),
+    scale(0.25),
+    pos(0, 320),
+    'cardsLeftText'
+  ]);
+
+  //player creation
+  const player = add([
+    pos(288-128, 192+64),
+    origin('botleft'),
+    sprite('playerSpritesheet', {
+      frame: 7,
+      flipX: true,
+    }),
+    scale(0.16),
+    area({
+      width: 32,
+      height: 32,
+    }),
+    'player'
+  ]);
+
+  //enemy creation
+  const enemy = add([
+    sprite('bear'),
+    origin('botleft'),
+    scale(0.06),
+    pos(352, 192+32),
+    area({
+      width: 32,
+      height: 32,
+    }),
+    'enemy'
+  ]);
+
+  //wait button creation
+  const waitButton = add([
+    text('wait'),
+    scale(0.35),
+    pos(384 + 124 + 64, 320),
+    area(),
+    'waitButton'
+  ]);
+
+  //drawing card game objects
+  const card1Actual = add([
+    rect(96, 160),
+    pos(96, 320),
+    scale(0.106),
+    sprite(card1ActualSprite),
+    area(),
+    'card1Actual',
+    {
+      value: deck2.deckCards.pop(),
+    }
+  ]);
+
+  const card2Actual = add([
+    rect(96, 160),
+    pos(256, 320),
+    scale(0.106),
+    sprite(card2ActualSprite),
+    area(),
+    'card2Actual',
+    {
+      value: deck2.deckCards.pop()
+    }
+  ]);
+
+  const card3Actual = add([
+    rect(96, 160),
+    pos(416, 320),
+    scale(0.106),
+    sprite(card3ActualSprite),
+    area(),
+    'card3Actual',
+    {
+      value: deck2.deckCards.pop()
+    }
+  ]);
+
+  cardController(player, deck2, card1Actual, card2Actual, card3Actual, card1ActualSprite, card2ActualSprite, card3ActualSprite);
+  cardsLeftTextUpdate(cardsLeftText, deck2);
+  registerPlayerCollisions(player, moveAmount, 'level3');
+
+  action ('enemy', () => {
+    if (turnStatus < 0) { //meaning it's enemy turn, doesn't run because turn status situaiton isnt checked every frame
+      //enemy movement
+      //enemy ai
+      //want the enemy to follow a set path, then if the player is within a certain
+      //number of blocks of them, it should go to them
+      //checks to see if player is outside of 1 tile of enemy
+      if (player.pos.x < enemy.pos.x - 32 || player.pos.x > enemy.pos.x + 32
+        || player.pos.y < enemy.pos.y - 32 || player.pos.y > enemy.pos.y + 32) {
+            enemy.moveBy(0, moveAmount);
+            changeTurn();
+      }
+      else {
+        enemy.moveTo(player.pos.x, player.pos.y, ); //last arg is pixels per second
+        changeTurn();
+      }
+    }
+  });
+
+  //enemy collisions
+  collides('enemy', 'impassable-wall', () => {
+    moveAmount = -moveAmount;
+  });
 });
 
 //FUNCTIONS
@@ -342,7 +457,7 @@ function cardsLeftTextUpdate(cardsLeftText, deck) {
   });
 }
 
-function registerCollisions(player, moveAmount, nextLevel) {
+function registerPlayerCollisions(player, moveAmount, nextLevel) {
   //COLLISIONS
   //player collision
   collides('player', 'enemy', () => {
@@ -356,12 +471,6 @@ function registerCollisions(player, moveAmount, nextLevel) {
     //add move to next level
     go(nextLevel);
   });
-  //enemy collisions
-  collides('enemy', 'impassable-wall', () => {
-    moveAmount = -moveAmount;
-  });
 }
 
-
-
-go('level1');
+go('level2');
