@@ -1,7 +1,3 @@
-//next - make the first level with one enemy
-//then - make the next level with more than one enemy
-//to do on plane -- draw out the first 5 levels on paper
-
 import kaboom from "https://unpkg.com/kaboom@next/dist/kaboom.mjs";
 
 import Card from "./card.js";
@@ -910,4 +906,4 @@ function registerPlayerCollisions(player, moveAmount, nextLevel) {
 
 //START GAME
 
-go('level4');
+go('level0');
