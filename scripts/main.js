@@ -410,69 +410,6 @@ scene('level2', () =>{
   });
 });
 
-//FUNCTIONS
-function cardChange(deckTemp, cardActualTemp, cardActualSpriteTemp) {
-  cardActualTemp.value = deckTemp.deckCards.pop();
-  cardActualSpriteTemp = cardActualTemp.value.cardSprite;
-  cardActualTemp.use(sprite(cardActualSpriteTemp));
-}
-
-function cardController(player, deck, card1Actual, card2Actual, card3Actual, card1ActualSprite, card2ActualSprite, card3ActualSprite) {
-  //TURN ORDER CONTROLLER + movement (turn status needs to be checked every frame)
-  if (turnStatus > 0) { //meaning it is the player's turn
-    //allow player movement using cards
-    //on click for each card, execute card action, update card value, update card sprite
-    clicks('card1Actual', ()=> {
-      player.moveBy(card1Actual.value.executeCardAction());
-      cardChange(deck, card1Actual, card1ActualSprite);
-      changeTurn();
-    });
-    clicks('card2Actual', ()=> {
-      player.moveBy(card2Actual.value.executeCardAction());
-      cardChange(deck, card2Actual, card2ActualSprite);
-      changeTurn();
-    });
-    clicks('card3Actual', ()=> {
-      player.moveBy(card3Actual.value.executeCardAction());
-      cardChange(deck, card3Actual, card3ActualSprite);
-      changeTurn();
-    });
-    clicks('waitButton', () => {
-      //if you wait too many times, you run out of cards! - this is good
-      deck.shuffleDeck();
-      cardChange(deck, card1Actual, card1ActualSprite);
-      cardChange(deck, card2Actual, card2ActualSprite);
-      cardChange(deck, card3Actual, card3ActualSprite);
-      console.log(deck.deckCards);
-      changeTurn();
-    });
-  }
-}
-
-function cardsLeftTextUpdate(cardsLeftText, deck) {
-  action('cardsLeftText', () => {
-    cardsLeftText.use(text('cards left: ' + deck.deckCards.length, {
-          width: 128,
-        }),);
-  });
-}
-
-function registerPlayerCollisions(player, moveAmount, nextLevel) {
-  //COLLISIONS
-  //player collision
-  collides('player', 'enemy', () => {
-    destroy(player);
-  });
-  collides('player', 'impassable-wall', () => {
-    console.log('collide w wall');
-    destroy(player);
-  });
-  collides('player', 'end-flag', () => {
-    //add move to next level
-    go(nextLevel);
-  });
-}
-
 
 //SCENE 3
 
@@ -753,7 +690,7 @@ scene('level4', () =>{
 
   cardController(player, deck4, card1Actual, card2Actual, card3Actual, card1ActualSprite, card2ActualSprite, card3ActualSprite);
   cardsLeftTextUpdate(cardsLeftText, deck4);
-  registerPlayerCollisions(player, moveAmount, 'level4');
+  registerPlayerCollisions(player, moveAmount, 'gameOver_Win');
 
   //lion enemy
   action ('enemyLion', () => {
@@ -796,7 +733,171 @@ scene('level4', () =>{
   });
   collides('enemyOctopus', 'impassable-wall', () => {
     moveAmount = -moveAmount;
-  })
+  });
+  collides('enemyLion', 'player', () => {
+    go('gameOver_Enemy');
+  });
+  collides('enemyOctopus', 'player', () => {
+    go('gameOver_Enemy');
+  });
 });
+
+
+//GAME OVER SCENES
+
+scene('gameOver_Enemy', () =>{
+  add([
+    text('Game Over!'),
+    origin('center'),
+    pos(width()/2, 64),
+  ]);
+  add([
+    text('You got caught by a balloon animal!'),
+    origin('center'),
+    pos(width()/2, 128),
+    scale(0.25),
+  ]);
+  add([
+    rect(),
+    text('Refresh to start over!'),
+    origin('center'),
+    pos(width()/2, 256),
+    scale(0.5),
+  ]);
+});
+
+scene('gameOver_Wall', () =>{
+  add([
+    text('Game Over!'),
+    origin('center'),
+    pos(width()/2, 64),
+  ]);
+  add([
+    text('You fell off the map!'),
+    origin('center'),
+    pos(width()/2, 128),
+    scale(0.25),
+  ]);
+  add([
+    rect(),
+    text('Refresh to start over!'),
+    origin('center'),
+    pos(width()/2, 256),
+    scale(0.5),
+  ]);
+});
+
+scene('gameOver_Cards', () =>{
+  add([
+    text('Game Over!'),
+    origin('center'),
+    pos(width()/2, 64),
+  ]);
+  add([
+    text('You ran out of cards!'),
+    origin('center'),
+    pos(width()/2, 128),
+    scale(0.25),
+  ]);
+  add([
+    rect(),
+    text('Refresh to start over!'),
+    origin('center'),
+    pos(width()/2, 256),
+    scale(0.5),
+  ]);
+});
+
+scene('gameOver_Win', () =>{
+  add([
+    text('You Win!'),
+    origin('center'),
+    pos(width()/2, 64),
+  ]);
+  add([
+    text('Thanks for playing!'),
+    origin('center'),
+    pos(width()/2, 128),
+    scale(0.25),
+  ]);
+  add([
+    rect(),
+    text('From JD, Haemin, and Amory!'),
+    origin('center'),
+    pos(width()/2, 256),
+    scale(0.25),
+  ]);
+});
+
+//FUNCTIONS
+function cardChange(deckTemp, cardActualTemp, cardActualSpriteTemp) {
+  if (deckTemp.deckCards.length <= 0) {
+    go('gameOver_Cards');
+  }
+  else {
+    cardActualTemp.value = deckTemp.deckCards.pop();
+    cardActualSpriteTemp = cardActualTemp.value.cardSprite;
+    cardActualTemp.use(sprite(cardActualSpriteTemp));
+  }
+}
+
+function cardController(player, deck, card1Actual, card2Actual, card3Actual, card1ActualSprite, card2ActualSprite, card3ActualSprite) {
+  //TURN ORDER CONTROLLER + movement (turn status needs to be checked every frame)
+  if (turnStatus > 0) { //meaning it is the player's turn
+    //allow player movement using cards
+    //on click for each card, execute card action, update card value, update card sprite
+
+    clicks('card1Actual', ()=> {
+      player.moveBy(card1Actual.value.executeCardAction());
+      cardChange(deck, card1Actual, card1ActualSprite);
+      changeTurn();
+    });
+    clicks('card2Actual', ()=> {
+      player.moveBy(card2Actual.value.executeCardAction());
+      cardChange(deck, card2Actual, card2ActualSprite);
+      changeTurn();
+    });
+    clicks('card3Actual', ()=> {
+      player.moveBy(card3Actual.value.executeCardAction());
+      cardChange(deck, card3Actual, card3ActualSprite);
+      changeTurn();
+    });
+    clicks('waitButton', () => {
+      //if you wait too many times, you run out of cards! - this is good
+      deck.shuffleDeck();
+      cardChange(deck, card1Actual, card1ActualSprite);
+      cardChange(deck, card2Actual, card2ActualSprite);
+      cardChange(deck, card3Actual, card3ActualSprite);
+      console.log(deck.deckCards);
+      changeTurn();
+    });
+  }
+}
+
+function cardsLeftTextUpdate(cardsLeftText, deck) {
+  action('cardsLeftText', () => {
+    cardsLeftText.use(text('cards left: ' + deck.deckCards.length, {
+          width: 128,
+        }),);
+  });
+}
+
+function registerPlayerCollisions(player, moveAmount, nextLevel) {
+  //COLLISIONS
+  //player collision
+  collides('player', 'enemy', () => {
+    go('gameOver_Enemy');
+  });
+  collides('player', 'impassable-wall', () => {
+    console.log('collide w wall');
+    destroy(player);
+  });
+  collides('player', 'end-flag', () => {
+    //add move to next level
+    go(nextLevel);
+  });
+}
+
+//START GAME
 
 go('level4');
